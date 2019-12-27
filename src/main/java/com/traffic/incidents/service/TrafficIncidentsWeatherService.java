@@ -31,7 +31,7 @@ public class TrafficIncidentsWeatherService {
     public TrafficIncidentsWeatherResponse trafficIncidentsWeatherResponse(String mapArea) {
         TrafficIncidentsResponse trafficIncidents = trafficIncidentsApiCall.getTrafficIncidents(mapArea);
 
-        Map<Long, Map<String, Double>> longMapMap = forkJoinPool.submit(() -> trafficIncidents.getResourceSets().stream().parallel()
+        Map<Long, Map<String, Integer>> longMapMap = forkJoinPool.submit(() -> trafficIncidents.getResourceSets().stream().parallel()
                 .map(TrafficIncidentsResponse.TrafficIncidentResource::getResources)
                 .flatMap(List::stream)
                 .map(trafficIncident ->
@@ -78,12 +78,12 @@ public class TrafficIncidentsWeatherService {
      * @param weatherReports
      * @return
      */
-    private Map<String, Double> findMinAverage(List<WeatherReport> weatherReports) {
+    private Map<String, Integer> findMinAverage(List<WeatherReport> weatherReports) {
         Double max_avg = weatherReports.stream().map(WeatherReport::getMax_temp).mapToDouble(w -> w).summaryStatistics().getAverage();
         Double min_avg = weatherReports.stream().map(WeatherReport::getMin_temp).mapToDouble(w -> w).summaryStatistics().getAverage();
-        Map<String, Double> map = new HashMap<>();
-        map.put("max_avg", max_avg);
-        map.put("min_avg", min_avg);
+        Map<String, Integer> map = new HashMap<>();
+        map.put("max_avg", max_avg.intValue());
+        map.put("min_avg", min_avg.intValue());
         return map;
     }
 }
