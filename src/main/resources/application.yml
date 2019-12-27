@@ -1,0 +1,9 @@
+server:
+  port: 8080
+
+api:
+  traffic-incidents: http://dev.virtualearth.net/REST/v1/Traffic/Incidents/{mapArea}
+  weather:
+    geographic: https://www.metaweather.com/api/location/search/
+    temperature: https://www.metaweather.com/api/location/{woeId}
+  key: Ak4J0k9tqLAF8YX0Znppfdu2GUCk4PTIzulXig_PiuvHpokvE2aiwMPOdT2wU5tS
